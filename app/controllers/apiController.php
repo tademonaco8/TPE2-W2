@@ -1,7 +1,7 @@
 <?php
 require_once './app/models/model.php';
 require_once './app/views/api.view.php';
-// require_once './app/controllers/auth-Api-controller.php';
+require_once './app/controllers/authController.php';
 
 
 class LightersController
@@ -14,7 +14,7 @@ class LightersController
     {
         $this->model = new LightersModel();
         $this->view = new  ApiView();
-        // $this->authapiHelper = new AuthApiHelper();
+        $this->authHelper = new AuthApiHelper();
         $this->data = file_get_contents("php://input");
     }
 
@@ -57,6 +57,11 @@ class LightersController
 
     public function DeleteLighter($params = null)
     {
+        if(!$this->authHelper->isLoggedIn()){
+            $this->view->response("No estas logeado", 401);
+            return;
+        }
+
         $id = $params[':ID'];
         $lighter = $this->model->getLighterByID($id);
         if ($lighter) {
@@ -67,6 +72,11 @@ class LightersController
     }
     public function InsertLighter($params = null)
     {
+        if(!$this->authHelper->isLoggedIn()){
+            $this->view->response("No estas logeado", 401);
+            return;
+        }
+
         $lighters = $this->getData();
         if (empty($lighters->producto) || empty($lighters->tipo_fk) || empty($lighters->precio) || empty($lighters->descripcion) || empty($lighters->img_url)) {
             $this->view->response("Complete the data for the insert please.", 400);
@@ -79,6 +89,11 @@ class LightersController
     }
     public function UpdateLighter($params = null)
     {
+        if(!$this->authHelper->isLoggedIn()){
+            $this->view->response("No estas logeado", 401);
+            return;
+        }
+
         $id = $params[':ID'];
         $lighter = $this->model->getLighterByID($id);
         $updatedLighter = $this->getData();

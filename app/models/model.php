@@ -13,8 +13,8 @@ class LightersModel{
     }
 
     public function orderLighters($order, $sortby){
-        $query = $this->db->prepare("SELECT * FROM encendedor ORDER BY ? ?");
-        $query->execute($sortby, $order);
+        $query = $this->db->prepare("SELECT * FROM encendedor ORDER BY `$sortby` $order");
+        $query->execute();
         $list = $query->fetchAll(PDO::FETCH_OBJ);
         return $list;
     }
@@ -30,9 +30,10 @@ class LightersModel{
         return $lighter;
     }
     public function getLightersByCategory($category){
-        $query = $this->db->prepare("SELECT * FROM encendedor WHERE tipo_FK = (SELECT id_tipo from tipo WHERE descripcion_tipo = ?);");
+        $query = $this->db->prepare("SELECT * FROM encendedor WHERE tipo_FK = (SELECT id_tipo from tipo WHERE descripcion_tipo = ?)");
         $query->execute([$category]);  
-        $lighters = $query->fetch(PDO::FETCH_OBJ);
+        $lighters = $query->fetchAll(PDO::FETCH_OBJ);
+        // var_dump($lighters);
         return $lighters;
     }
     public function updateLighter($producto,$tipo_fk,$precio,$descripcion,$img_url, $id){

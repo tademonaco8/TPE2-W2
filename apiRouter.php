@@ -6,7 +6,7 @@ $router = new Router();
 
 //tabla de ruteo
 $router->addRoute('lighters', 'GET', 'lightersController', 'ShowLighters');
-$router->addRoute('lighters/:CATEGORY', 'GET', 'lightersController', 'ShowLighters');
+// $router->addRoute('lighters/:CATEGORY', 'GET', 'lightersController', 'ShowLighters');
 $router->addRoute('lighters/:ID', 'GET', 'lightersController', 'GetLighter');
 $router->addRoute('lighters/:ID', 'DELETE', 'lightersController', 'DeleteLighter');
 $router->addRoute('lighters', 'POST', 'lightersController', 'InsertLighter'); 
