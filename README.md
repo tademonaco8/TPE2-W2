@@ -5,6 +5,9 @@
 > - Returns an object with the list of *ALL* lighters.
 ### URL:  api/lighters?sortby=*columna*&order=*ASC/DESC*
 > - Method: GET
+> - Returns an object with the list of *ALL* lighters ordered by the specified column and the required order(ASC/DESC).
+### URL:  api/lighters?category=*category*
+> - Method: GET
 > - Returns an object with the list of *ALL* lighters of the specified category.
 ### URL:  api/lighters/:ID
 > - Method: GET
