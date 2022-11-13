@@ -3,6 +3,9 @@
 ### URL:  api/lighters/
 > Method: GET
 > Returns an object with the list of *ALL* lighters.
+### URL:  api/lighters/:CATEGORY
+> Method: GET
+> Returns an object with the list of *ALL* lighters of the specified category.
 ### URL:  api/lighters/:ID
 > Method: GET
 > Returns an object with the lighter of the specified ID.
