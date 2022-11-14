@@ -33,6 +33,9 @@ class LightersController
             } elseif (isset($_GET['category'])) {
                 $category = $_GET['category'];
                 $lighters = $this->model->getLightersByCategory($category);
+            } elseif (isset($_GET['filterby'])) {
+                $filterby = $_GET['filterby'];
+                $lighters = $this->model->filterLightersByName($filterby);
             } else {
                 $lighters = $this->model->getList();
             }

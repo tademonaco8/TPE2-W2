@@ -19,6 +19,13 @@ class LightersModel{
         return $list;
     }
 
+    public function filterLightersByName($filterby){
+        $query = $this->db->prepare("SELECT * FROM encendedor WHERE producto LIKE '%$filterby%'");
+        $query->execute();
+        $list = $query->fetchAll(PDO::FETCH_OBJ);
+        return $list;
+    }
+
     public function insertLighter($producto,$tipo_fk,$descripcion,$precio, $img_url) {
         $query = $this->db->prepare("INSERT INTO encendedor (producto, tipo_fk ,precio, descripcion, img_url) VALUES (?,?,?,?,?)");
         $query->execute([$producto,$tipo_fk,$precio,$descripcion, $img_url]);
