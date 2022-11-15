@@ -25,6 +25,7 @@ class LightersController
 
     public function ShowLighters()
     {
+        $defaultOffset = 0;
         try {
             if (isset($_GET['order']) && isset($_GET['sortby'])) {
                 $order = $_GET['order'];
@@ -36,6 +37,16 @@ class LightersController
             } elseif (isset($_GET['filterby'])) {
                 $filterby = $_GET['filterby'];
                 $lighters = $this->model->filterLightersByName($filterby);
+            } elseif (isset($_GET['limit']) && (isset($_GET['offset']))) {
+                $limit = $_GET['limit'];
+                $offset = $_GET['offset'];
+                $lighters = $this->model->getList();
+                $lighters = $this->paginar($limit, $lighters, $offset);
+            } elseif (isset($_GET['limit']) && (!isset($_GET['offset']))) {
+                $limit = $_GET['limit'];
+                $offset = $defaultOffset;
+                $lighters = $this->model->getList();
+                $lighters = $this->paginar($limit, $lighters, $offset);
             } else {
                 $lighters = $this->model->getList();
             }
@@ -48,10 +59,8 @@ class LightersController
 
     public function GetLighter($params = null)
     {
-        //obtengo la id del arreglo de parametro
         $id = $params[':ID'];
-        $lighter = $this->model->getLighterByID($id);
-        // si no existe devolver 404 
+        $lighter = $this->model->getLighterByID($id); 
         if ($lighter)
             $this->view->response($lighter);
         else
@@ -85,9 +94,7 @@ class LightersController
             $this->view->response("Complete the data for the insert please.", 400);
         } else {
             $this->model->insertLighter($lighters->producto, $lighters->tipo_fk, $lighters->precio, $lighters->descripcion, $lighters->img_url);
-            $id = $this->model->getLastInsertedID();
-            $lighter = $this->model->getLighterByID($id);
-            $this->view->response($lighter, 201);
+            $this->view->response($lighters, 201);
         }
     }
     public function UpdateLighter($params = null)
@@ -107,4 +114,14 @@ class LightersController
             $this->view->response("The lighter with the id=$id can not be found.", 404);
         }
     }
+
+    public function paginar($limit, $lighters, $offset){
+        if (array_slice($lighters, $offset, $limit) == []){
+            $this->view->response("There was an error during the pagination, check the ranges.", 400);
+            die();
+        }
+        return array_slice($lighters, $offset, $limit);
+
+    }
+
 }

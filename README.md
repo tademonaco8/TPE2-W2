@@ -1,5 +1,6 @@
 # TPE2-WEB2-REST
 ## API Endpoints
+> An API REST to manage a CRUD service.
 ### URL:  api/lighters/
 > - Method: GET
 > - Returns an object with the list of *ALL* lighters.
