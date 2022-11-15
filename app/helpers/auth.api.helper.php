@@ -1,8 +1,8 @@
 <?php
-
 class AuthApiHelper {
     function getToken(){
-        $auth = $this->getAuthHeader(); // Bearer header.payload.signature
+        $auth = $this->getAuthHeader(); 
+        // Bearer header.payload.signature
         $auth = explode(" ", $auth);
         if($auth[0]!="Bearer" || count($auth) != 2){
             return array();
@@ -11,7 +11,6 @@ class AuthApiHelper {
         $header = $token[0];
         $payload = $token[1];
         $signature = $token[2];
-
         $new_signature = hash_hmac('SHA256', "$header.$payload", "admin", true);
         $new_signature = base64url_encode($new_signature);
         if($signature!=$new_signature)
@@ -19,7 +18,6 @@ class AuthApiHelper {
         $payload = json_decode(base64_decode($payload));
         if(!isset($payload->exp) || $payload->exp<time())
             return array();
-        
         return $payload;
     }
 

@@ -30,6 +30,7 @@ class LightersModel{
         $query = $this->db->prepare("INSERT INTO encendedor (producto, tipo_fk ,precio, descripcion, img_url) VALUES (?,?,?,?,?)");
         $query->execute([$producto,$tipo_fk,$precio,$descripcion, $img_url]);
     }
+    
     public function getLighterByID($id){
         $query = $this->db->prepare("SELECT * FROM encendedor WHERE id =?");
         $query->execute([$id]);  
@@ -51,12 +52,12 @@ class LightersModel{
         $query = $this->db->prepare('DELETE FROM encendedor WHERE id = ?');
         $query->execute([$id]);
     }
-    public function getLastInsertedId(){
-        $query = $this->db->prepare('SELECT MAX(id) FROM encendedor');
-        $query->execute();
-        $id = $query->fetch(PDO::FETCH_OBJ);
-        return $id;
-    }
+    // public function getLastInsertedId(){
+    //     $query = $this->db->prepare('SELECT MAX(id) FROM encendedor');
+    //     $query->execute();
+    //     $id = $query->fetch(PDO::FETCH_OBJ);
+    //     return $id;
+    // }
 
 }
 ?>
